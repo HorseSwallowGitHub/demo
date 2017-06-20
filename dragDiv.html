@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#div1{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+			}
+			#div2{
+				width: 100px;
+				height: 100px;
+				background: green;
+				position: absolute;
+				top: 200px;
+				left: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--拖拽的原理：
+		1、鼠标和div的相对距离保持不变
+		2、三大事件:onmousedown(选择元素),onmousemove(移动元素),onmouseup(释放元素)
+		3、把拖拽加到document上面-->
+		
+		<div id="div1"></div>
+		<div id="div2"></div>
+		
+		<script>
+			var oDiv = document.getElementById("div1");
+			oDiv.onmousedown = function(ev){
+				
+				var ev = ev || event; 
+				var disX = ev.clientX - this.offsetLeft;
+				var disY = ev.clientY - this.offsetTop;
+				
+				document.onmousemove = function(ev){
+					var ev = ev || event;
+					oDiv.style.left = ev.clientX - disX + "px";
+					oDiv.style.top = ev.clientY - disY + "px";
+				}
+				
+				document.onmouseup = function(){
+					document.onmousemove = document.onmouseup = null;
+				}
+			}
+		</script>
+	</body>
+</html>
